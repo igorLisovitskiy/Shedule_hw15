@@ -12,20 +12,14 @@
 <body>
 <h1>Schedule</h1>
 <br/>
-      <form action = "schedule" method = "GET">
-       <h4>Number of:</h4>
-         Days <input type = "text" name = "days">
-         <br/>
-         Subjects <input type = "text" name = "subjects" />
-         <br/>
-         Audiences <input type = "text" name = "audiences" />
-         <br/>
-         <input type = "submit" value = "Submit" />
-          <br/>
-      </form>
-       <br/>
-       <button type="button" onclick="location.href = 'schedule?select=all'" id="select-all">Select all</button>
-       <br/>
-	<%=request.getAttribute("data")%>
+<%= (String)request.getAttribute("data") %>
+<table>
+    <c:forEach items="${data}" var="professors"> 
+      <tr>
+         <td><c:out value="${professors.getId}"/></td>
+         <td><c:out value="${professors.getName}"/></td>
+      </tr>
+    </c:forEach>>
+    </table>
 </body>
 </html>

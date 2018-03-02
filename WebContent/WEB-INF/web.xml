@@ -4,7 +4,7 @@
 	version="2.4">
 	<servlet>
 		<servlet-name>Schedule</servlet-name>
-		<servlet-class>com.lisovitskiy.hw15.ReportServlet</servlet-class>
+		<servlet-class>com.lisovitskiy.hw15.controller.ScheduleController</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Schedule</servlet-name>
