@@ -8,6 +8,8 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
+import com.lisovitskiy.hw15.model.Professor;
+
 public class ScheduleController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -18,14 +20,13 @@ public class ScheduleController extends HttpServlet {
 		String days = request.getParameter("days");
 		String subjects = request.getParameter("subjects");
 		String selectAll = request.getParameter("select");
-		request.setAttribute("data", sf.sDao.selectAll());
+		List<Professor> list = sf.getProfessors();
+		request.setAttribute("list", list);
 		try {
 			request.getRequestDispatcher("schedule.jsp").forward(request, response);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-
 
 	}
 

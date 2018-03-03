@@ -63,13 +63,13 @@ public class DefaultScheduleDAO implements ScheduleDAO {
 		try {
 			Connection conn = DriverManager
 					.getConnection("jdbc:mysql://localhost:3306/schedule?autoReconnect=true&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
-			ps = (PreparedStatement) conn.prepareStatement(query);//getPreparedStatement(this.connection, query, arg);
+			ps = (PreparedStatement) conn.prepareStatement(query);
 			rs = ps.executeQuery();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			//ScheduleConnection.closeConnection(connection);
+			// ScheduleConnection.closeConnection(connection);
 		}
 		return rs;
 	}
@@ -84,7 +84,7 @@ public class DefaultScheduleDAO implements ScheduleDAO {
 			Connection conn = DriverManager
 					.getConnection("jdbc:mysql://localhost:3306/schedule?autoReconnect=true&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
 	
-			ps = (PreparedStatement) conn.prepareStatement(SELECT_ALL);//getPreparedStatement(this.connection, query, arg);
+			ps = (PreparedStatement) conn.prepareStatement(SELECT_ALL);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				profList.add(new Professor(rs.getInt("id_professors"), rs.getString("full_name")));
@@ -97,20 +97,11 @@ public class DefaultScheduleDAO implements ScheduleDAO {
 
 	@Override
 	public List<Professor> selectProfessorsNotWorkingOnDay(String day) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<Professor> selectProfessorsWorkingOnDayInAudience(String day, int audience) {
-		// TODO Auto-generated method stub
 		return null;
 	}
-//	public static void main(String[] args) {
-//		DefaultScheduleDAO sDao = new DefaultScheduleDAO("root", "root");
-//		List<Professor> l = sDao.selectAll();
-//		System.out.println(l.get(0).getName());
-//		
-//	}
-
 }

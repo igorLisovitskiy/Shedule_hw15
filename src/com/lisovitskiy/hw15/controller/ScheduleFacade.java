@@ -9,7 +9,9 @@ import com.lisovitskiy.hw15.model.Professor;
 public class ScheduleFacade {
 	private static final String DB_USER = "root";
 	private static final String DB_PASSWORD = "root";
-	DefaultScheduleDAO sDao = new DefaultScheduleDAO(DB_USER, DB_PASSWORD);
 	
-
+	public List<Professor> getProfessors(){
+		 DefaultScheduleDAO sDao = new DefaultScheduleDAO(DB_USER, DB_PASSWORD);
+		return sDao.selectAll();
+	}
 }
