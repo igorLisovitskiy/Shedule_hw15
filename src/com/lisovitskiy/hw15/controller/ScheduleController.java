@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
+import com.lisovitskiy.hw15.facade.ScheduleFacade;
 import com.lisovitskiy.hw15.model.Professor;
 
 public class ScheduleController extends HttpServlet {
@@ -16,10 +17,6 @@ public class ScheduleController extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 		ScheduleFacade sf = new ScheduleFacade();
-		String audiences = request.getParameter("audiences");
-		String days = request.getParameter("days");
-		String subjects = request.getParameter("subjects");
-		String selectAll = request.getParameter("select");
 		List<Professor> list = sf.getProfessors();
 		request.setAttribute("list", list);
 		try {
