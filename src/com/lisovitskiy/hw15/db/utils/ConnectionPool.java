@@ -18,8 +18,7 @@ public enum ConnectionPool {
 		p.setUsername(DB_USER);
 		p.setPassword(DB_PASSWORD);
 		p.setMaxActive(100);
-		p.setMinIdle(20);
-		p.setMaxIdle(50);
+		p.setMaxAge(50000);
 		DataSource dSource = new DataSource();
 		dSource.setPoolProperties(p);
 		Connection con = null;

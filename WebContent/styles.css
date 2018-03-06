@@ -1,21 +1,33 @@
-table, td, th {    
-    border: 1px solid #ddd;
-    text-align: left;
+body, h1 {
+	font-family: "Raleway", Arial, sans-serif
+}
+
+table, td, th {
+	border: 1px solid #ddd;
+	text-align: left;
 }
 
 table {
-    border-collapse: collapse;
-    width: 50%;
+	border-collapse: collapse;
+	width: 50%;
 }
 
 th, td {
-    padding: 15px;
+	padding: 15px;
 }
+
 body {
 	font-size: large;
 }
-input{
-	 float: left;
-  display: block;
-  margin-right: 30px;
+
+input.values {
+	display: none;
 }
+input.values.active {
+	display: inline-block;
+}
+.btn{
+	margin-top: 20px;
+	display: grid !important;
+}
+
