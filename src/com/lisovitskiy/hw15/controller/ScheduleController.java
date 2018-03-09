@@ -13,10 +13,9 @@ import com.lisovitskiy.hw15.model.Professor;
 public class ScheduleController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-
-
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 		ScheduleFacade sf = new ScheduleFacade();
+		
 		Integer action = null;
 		try {
 			action = Integer.parseInt(request.getParameter("action"));
@@ -25,7 +24,7 @@ public class ScheduleController extends HttpServlet {
 				action = 1;
 			}
 		}
-	
+		
 		switch (action) {
 		case 1:
 			List<Professor> profListAll = sf.getProfessors();

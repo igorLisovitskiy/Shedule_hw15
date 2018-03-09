@@ -7,8 +7,10 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import javax.sql.DataSource;
 
-import com.lisovitskiy.hw15.db.utils.ConnectionPool;
+import com.lisovitskiy.hw15.db.utils.AppUtil;
+import com.lisovitskiy.hw15.db.utils.ConnectionManager;
 
 /**
  * Application Lifecycle Listener implementation class ConnectionPoolListener
@@ -27,24 +29,28 @@ public class ConnectionPoolListener implements ServletContextListener {
     }
 
     public void contextDestroyed(ServletContextEvent sce)  { 
-    	Connection con = (Connection) servletContext.getAttribute("connectionPool");
+    	
     	System.out.println("destroyed");
-    	try {
-			con.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+    
     }
 
     public void contextInitialized(ServletContextEvent sce)  { 
     	servletContext = sce.getServletContext();
+    	
     	//db initialization
 //    	String url = servletContext.getInitParameter("url");
 //    	String user = servletContext.getInitParameter("user");
 //    	String password = servletContext.getInitParameter("password");
     	System.out.println("listen");
-    	Connection connection =  ConnectionPool.INSTANCE.getConnection(DB_CONNECTION_URL, DB_USER, DB_PASSWORD);
-    	servletContext.setAttribute("connectionPool", connection);
+    	Connection con = null;
+		try {
+			ConnectionManager.setUpConnection(DB_CONNECTION_URL, DB_USER, DB_PASSWORD);
+			con = ConnectionManager.getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	servletContext.setAttribute("Connection", con);
+    	AppUtil.setServletContext(servletContext);
     }
 	
 }

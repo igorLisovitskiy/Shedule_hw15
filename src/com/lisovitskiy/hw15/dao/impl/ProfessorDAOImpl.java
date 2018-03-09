@@ -1,9 +1,7 @@
 package com.lisovitskiy.hw15.dao.impl;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +9,8 @@ import java.util.List;
 import javax.servlet.ServletContext;
 
 import com.lisovitskiy.hw15.dao.ProfessorDAO;
-import com.lisovitskiy.hw15.db.utils.ConnectionPool;
+import com.lisovitskiy.hw15.db.utils.AppUtil;
+import com.lisovitskiy.hw15.db.utils.ConnectionManager;
 import com.lisovitskiy.hw15.model.Professor;
 import java.sql.PreparedStatement;
 
@@ -19,7 +18,7 @@ public class ProfessorDAOImpl implements ProfessorDAO {
 	private static final String DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/schedule?autoReconnect=true&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC";
 	private static final String DB_USER = "root";
 	private static final String DB_PASSWORD = "root";
-	private ServletContext servletContext;
+	private ServletContext servletContext = AppUtil.getServletContext();
 
 	private final static String SELECT_PROFESSORS_WORKING_ON_DAY_IN_AUDIENCE = "SELECT p.id_professors, full_name, audience_id_audience AS auidience, name "
 			+ "FROM professors p " + "INNER JOIN professors_have_subjects ps "
@@ -44,7 +43,7 @@ public class ProfessorDAOImpl implements ProfessorDAO {
 		List<Professor> profList = new ArrayList<>();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		try (Connection conn = ConnectionPool.INSTANCE.getConnection(DB_CONNECTION_URL, DB_USER, DB_PASSWORD)) { //remove this, get connection pool from context
+		try (Connection conn = ConnectionManager.getConnection()) { //remove this, get connection pool from context
 			ps = conn.prepareStatement(SELECT_ALL_PROFESSORS);
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -61,7 +60,7 @@ public class ProfessorDAOImpl implements ProfessorDAO {
 		List<Professor> profList = new ArrayList<>();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		try (Connection conn = (Connection) servletContext.getAttribute("connectionPool")) {
+		try (Connection conn = ConnectionManager.getConnection()) {
 			ps = conn.prepareStatement(SELECT_PROFESSORS_NOT_WORKING_ON_DAY);
 			ps.setString(1, day);
 			rs = ps.executeQuery();
@@ -79,7 +78,7 @@ public class ProfessorDAOImpl implements ProfessorDAO {
 		List<Professor> profList = new ArrayList<>();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		try (Connection conn = (Connection) servletContext.getAttribute("connectionPool")) {
+		try (Connection conn = ConnectionManager.getConnection()) {
 			ps = conn.prepareStatement(SELECT_PROFESSORS_WORKING_ON_DAY_IN_AUDIENCE);
 			ps.setInt(1, audience);
 			ps.setString(2, day);

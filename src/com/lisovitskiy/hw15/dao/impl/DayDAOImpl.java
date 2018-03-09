@@ -10,11 +10,12 @@ import java.util.List;
 import javax.servlet.ServletContext;
 
 import com.lisovitskiy.hw15.dao.DayDAO;
-import com.lisovitskiy.hw15.db.utils.ConnectionPool;
+import com.lisovitskiy.hw15.db.utils.AppUtil;
+import com.lisovitskiy.hw15.db.utils.ConnectionManager;
 import com.lisovitskiy.hw15.model.Day;
 
 public class DayDAOImpl implements DayDAO {
-	ServletContext servletContext;
+	ServletContext servletContext = AppUtil.getServletContext();
 	
 	private final static String SELECT__DAYS_BY_NUMBER_OF_LESSONS = "SELECT day, COUNT(subjects_id_subjects) AS 'number of lessons' "
 			+ "FROM audience_has_subjects GROUP BY day HAVING COUNT(subjects_id_subjects) = ?";
@@ -28,7 +29,7 @@ public class DayDAOImpl implements DayDAO {
 		List<Day> dayList = new ArrayList<>();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		try (Connection conn = (Connection) servletContext.getAttribute("connectionPool")) {
+		try (Connection conn = ConnectionManager.getConnection()) {
 			ps = conn.prepareStatement(SELECT_ALL_DAYS);
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -45,7 +46,7 @@ public class DayDAOImpl implements DayDAO {
 		List<Day> dayList = new ArrayList<>();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		try (Connection conn = (Connection) servletContext.getAttribute("connectionPool")) {
+		try (Connection conn = ConnectionManager.getConnection()) {
 			ps = conn.prepareStatement(SELECT_DAYS_BY_OCCUPIED_AUDIENCES);
 			ps.setInt(1, audiences);
 			rs = ps.executeQuery();
@@ -62,7 +63,7 @@ public class DayDAOImpl implements DayDAO {
 		List<Day> dayList = new ArrayList<>();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		try (Connection conn = (Connection) servletContext.getAttribute("connectionPool")) {
+		try (Connection conn = ConnectionManager.getConnection()) {
 			ps = conn.prepareStatement(SELECT__DAYS_BY_NUMBER_OF_LESSONS);
 			ps.setInt(1, numberOfLessons);
 			rs = ps.executeQuery();
